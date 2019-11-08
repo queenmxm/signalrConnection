@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- EnterPage.cshtml 监控受限页面-->
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EnterPage</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(function () {
+            var conn = $.connection("/mmConnection");
+
+            conn.start().fail(function (msg) {
+                alert(msg);
+            });
+
+            conn.received(function (data) {
+                if (data == "通过了") {
+                    $("#msg").html("管理员已审核通过，可以进入浏览详情。");                  
+                }
+              
+            });
+        });
+    </script>
+    <div id="msg">
+        该页面浏览受限，已自动将您的浏览请求发给管理员，请稍候。。。
+    </div>
+</body>
+</html>
